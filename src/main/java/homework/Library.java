@@ -4,7 +4,24 @@
 package homework;
 
 public class Library {
-    public boolean someLibraryMethod() {
-        return true;
+
+
+    public String getGreeting() {
+
+
+
+
+
+
+
+
+
+
+
+        return "Hello world.";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Library().getGreeting());
     }
 }
