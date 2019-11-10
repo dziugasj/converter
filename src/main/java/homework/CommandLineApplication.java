@@ -14,21 +14,21 @@ import static java.math.MathContext.DECIMAL64;
 public class CommandLineApplication {
 
     private static final MathContext MATH_OPERATIONS_CONTEXT = DECIMAL64;
-    private static final int CURRENCY_PRECISION = 2;
+    private static final int CURRENCY_SCALE = 2;
     private static final Locale DEFAULT_LOCALE = Locale.forLanguageTag("da-DK");
     private static final String DEFAULT_CURRENCY_CODE = "DKK";
     private static final RateProvider RATE_PROVIDER = new HardcodedRateProvider();
 
-    private CommandLineConverter converter;
+    private Converter converter;
 
-    public CommandLineApplication(CommandLineConverter converter) {
+    public CommandLineApplication(Converter converter) {
         this.converter = converter;
     }
 
     public static void main(String[] args) {
 
         // TODO Maybe to use converter factory ?
-        CommandLineConverter converter = new CommandLineConverter(MATH_OPERATIONS_CONTEXT, CURRENCY_PRECISION, DEFAULT_LOCALE, DEFAULT_CURRENCY_CODE, RATE_PROVIDER);
+        Converter converter = new Converter(MATH_OPERATIONS_CONTEXT, CURRENCY_SCALE, DEFAULT_LOCALE, DEFAULT_CURRENCY_CODE, RATE_PROVIDER);
 
         new CommandLineApplication(converter).execute(args);
     }
@@ -43,11 +43,10 @@ public class CommandLineApplication {
     }
 
     public void printSuccessMessage(String message) {
-        //System.out.println(message);
-        String xxx = "";
+        System.out.println(message);
     }
 
     public void printErrorMessage(String message) {
-        //System.err.println(message);
+        System.err.println(message);
     }
 }

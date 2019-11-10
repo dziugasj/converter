@@ -7,22 +7,14 @@ public class Argument {
     private final String sourceCurrencyCode;
     private final String targetCurrencyCode;
     private final BigDecimal sourceAmount;
+    private final boolean valid;
 
-    public Argument(String sourceCurrencyCode, String targetCurrencyCode, BigDecimal sourceAmount) {
+    public Argument(String sourceCurrencyCode, String targetCurrencyCode, BigDecimal sourceAmount, boolean valid) {
         this.sourceCurrencyCode = sourceCurrencyCode;
         this.targetCurrencyCode = targetCurrencyCode;
         this.sourceAmount = sourceAmount;
+        this.valid = valid;
     }
 
-    public String getSourceCurrencyCode() {
-        return sourceCurrencyCode;
-    }
 
-    public String getTargetCurrencyCode() {
-        return targetCurrencyCode;
-    }
-
-    public BigDecimal getSourceAmount() {
-        return sourceAmount;
-    }
 }

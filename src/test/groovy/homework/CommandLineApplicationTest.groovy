@@ -12,7 +12,7 @@ class CommandLineApplicationSpec extends Specification {
     static final String SUCCESS_MESSAGE = "Everything is fine"
     static final String FAILURE_MESSAGE = "Wrong parameters"
 
-    CommandLineConverter converter = Mock()
+    Converter converter = Mock()
 
     @Subject
     CommandLineApplication application = new CommandLineApplication(converter)
