@@ -20,7 +20,8 @@ public class ArgumentValidator implements Validator {
         return isAllValuesFilled(argument)
                 && rateIsPresent(argument.getSource(), rateProvider::getBuyRate)
                 && rateIsPresent(argument.getTarget(), rateProvider::getSellRate)
-                && amountIsValid(argument.getAmount());
+                && amountIsValid(argument.getAmount())
+                && argument.parameterCountIsValid();
     }
 
     private boolean isAllValuesFilled(ArgumentWrapper argument) {
@@ -40,6 +41,7 @@ public class ArgumentValidator implements Validator {
         addSourceMessage(argument, builder);
         addTargetMessage(argument, builder);
         addAmountMessage(argument, builder);
+        addParameterCountMessage(argument, builder);
 
         return builder.toString();
     }
@@ -57,8 +59,14 @@ public class ArgumentValidator implements Validator {
     }
 
     private void addAmountMessage(ArgumentWrapper argument, StringBuilder builder) {
-        if (amountIsValid(argument.getAmount())) {
-            builder.append("Amount is incorrectly formatted");
+        if (!amountIsValid(argument.getAmount())) {
+            builder.append("Amount is incorrectly formatted;");
+        }
+    }
+
+    private void addParameterCountMessage(ArgumentWrapper argument, StringBuilder builder) {
+        if (!argument.parameterCountIsValid()) {
+            builder.append("Wrong number of parameters;");
         }
     }
 
