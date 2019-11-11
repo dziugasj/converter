@@ -3,8 +3,7 @@ package homework.argument;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.ofNullable;
+import static java.util.Optional.*;
 
 public class ArgumentWrapper {
     private final String args[];
@@ -23,9 +22,7 @@ public class ArgumentWrapper {
 
     public Optional<BigDecimal> getAmount() {
         if (parameterCountIsValid()) {
-            return ofNullable(args[1])
-                    .map(s -> new BigDecimal(s))
-                    .or(() -> empty());
+            return toBigDecimal(args[1]);
         } else {
             return empty();
         }
@@ -35,14 +32,27 @@ public class ArgumentWrapper {
         return args.length == 2 && getPair().length == 2;
     }
 
+    public boolean noParameters() {
+        return args.length == 0;
+    }
+
     private String[] getPair() {
         return args[0].split("/");
     }
 
     private Optional<String> getCodeByEntry(int entry) {
-        if (parameterCountIsValid()) {
+        String[] pair = getPair();
+        if (pair.length == 2) {
             return ofNullable(getPair()[entry]);
         } else {
+            return empty();
+        }
+    }
+
+    private Optional<BigDecimal> toBigDecimal(String amount) {
+        try {
+            return of(new BigDecimal(amount));
+        } catch (NumberFormatException | NullPointerException e) {
             return empty();
         }
     }

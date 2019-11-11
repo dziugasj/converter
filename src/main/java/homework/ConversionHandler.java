@@ -38,12 +38,15 @@ public class ConversionHandler {
     }
 
     private ConversionParameter toConversionParameter(ArgumentWrapper argument) {
-        Currency sourceCurrency = toCurrency(argument.getSource());
-        Currency targetCurrency = toCurrency(argument.getTarget());
+
+        // TODO fix this
+
+        Currency sourceCurrency = toCurrency(argument.getSource().get());
+        Currency targetCurrency = toCurrency(argument.getTarget().get());
         BigDecimal sourceRate = rateProvider.getBuyRate(sourceCurrency).orElseThrow(() -> new RuntimeException("No buy rate"));
         BigDecimal targetRate = rateProvider.getSellRate(targetCurrency).orElseThrow(() -> new RuntimeException("No sell rate"));
 
-        return new ConversionParameter(sourceCurrency, targetCurrency, sourceRate, targetRate, argument.getAmount());
+        return new ConversionParameter(sourceCurrency, targetCurrency, sourceRate, targetRate, argument.getAmount().get());
     }
 
     private Currency toCurrency(String code) {

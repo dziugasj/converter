@@ -17,7 +17,7 @@ public class CommandLineApplication {
     public static void main(String[] args) {
         RateProvider rateProvider = new RateProviderFactory().getRateProvider();
         Validator validator = new ValidatorFactory().getValidator(rateProvider);
-        Converter converter = new ConverterFactory().getConverter(rateProvider);
+        Converter converter = new ConverterFactory().getConverter();
         Printer printer = new PrinterFactory().getPrinter();
 
         new ConversionHandler(validator, converter, printer, rateProvider).convertAndPrintResult(new ArgumentWrapper(args));

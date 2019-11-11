@@ -33,6 +33,7 @@ public class HardcodedRateProvider implements RateProvider {
         return ImmutableMap.<Currency, BigDecimal>builder()
                 .put(new Currency("PLN"), valueOf(4.41430))
                 .put(new Currency("USD"), valueOf(1.14480))
+                .put(new Currency("EUR"), valueOf(1.0))
                 .build();
     }
 
@@ -40,6 +41,7 @@ public class HardcodedRateProvider implements RateProvider {
         return ImmutableMap.<Currency, BigDecimal>builder()
                 .put(new Currency("PLN"), valueOf(4.10560))
                 .put(new Currency("USD"), valueOf(1.06190))
+                .put(new Currency("EUR"), valueOf(1.0))
                 .build();
     }
 }

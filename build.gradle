@@ -8,6 +8,8 @@ repositories {
     jcenter()
 }
 
+sourceCompatibility = '11'
+
 dependencies {
     implementation 'com.google.guava:guava:28.0-jre'
 
