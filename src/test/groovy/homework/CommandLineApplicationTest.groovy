@@ -9,10 +9,10 @@ import spock.lang.Subject
 
 class CommandLineApplicationSpec extends Specification {
 
-    static final String SUCCESS_MESSAGE = "Everything is fine"
+    static final String CONVERTED_VALUE = "555.333"
     static final String FAILURE_MESSAGE = "Wrong parameters"
 
-    Converter converter = Mock()
+    ConversionHandler converter = Mock()
 
     @Subject
     CommandLineApplication application = new CommandLineApplication(converter)
@@ -20,23 +20,23 @@ class CommandLineApplicationSpec extends Specification {
     def "application executed with correct parameters and printed output"() {
         given:
             String[] params = []
-            converter.convert(params) >> createSuccessExecutionResultMock()
+            converter.convertAndPrintResult(params) >> createSuccessExecutionResultMock()
         when:
             application.execute(params)
         then:
             // TODO fix this
-            0 * application.printSuccessMessage(SUCCESS_MESSAGE)
+            0 * application.printSuccessMessage(CONVERTED_VALUE)
     }
 
-    private ExecutionResult createSuccessExecutionResultMock() {
-        Mock(ExecutionResult) {
+    private ConversionResult createSuccessExecutionResultMock() {
+        Mock(ConversionResult) {
             isSuccess() >> true
-            getSuccessMessage() >> SUCCESS_MESSAGE
+            getConvertedValue() >> CONVERTED_VALUE
         }
     }
 
-    private ExecutionResult createFailureExecutionResultMock() {
-        Mock(ExecutionResult) {
+    private ConversionResult createFailureExecutionResultMock() {
+        Mock(ConversionResult) {
             isSuccess() >> false
             getErrorMessage() >> FAILURE_MESSAGE
         }

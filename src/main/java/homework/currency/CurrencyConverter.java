@@ -20,18 +20,15 @@ public class CurrencyConverter {
         this.rateProvider = rateProvider;
     }
 
-    public BigDecimal convertCurrency(CurrencyPair pair, BigDecimal amount) {
-        if (conversionIsRequired(pair)) {
-            return round(convert(pair, amount));
+    public BigDecimal convert(Currency source, Currency target, BigDecimal amount) {
+        if (conversionIsRequired(source, target)) {
+            return round(convertAmount(source, target, amount));
         } else {
             return amount;
         }
     }
 
-    private BigDecimal convert(CurrencyPair pair, BigDecimal amount) {
-        Currency source = pair.getSourceCurrency();
-        Currency target = pair.getTargetCurrency();
-
+    private BigDecimal convertAmount(Currency source, Currency target, BigDecimal amount) {
         if (source.equals(baseCurrency)) {
             return toTargetCurrency(amount, target);
         } else if (target.equals(baseCurrency)) {
@@ -41,7 +38,7 @@ public class CurrencyConverter {
         }
     }
 
-    private boolean conversionIsRequired(CurrencyPair pair) {
+    private boolean conversionIsRequired(Currency source, Currency target) {
         return !pair.getSourceCurrency().equals(pair.getTargetCurrency());
     }
 

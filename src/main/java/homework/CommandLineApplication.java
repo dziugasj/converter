@@ -3,6 +3,7 @@
  */
 package homework;
 
+import homework.argument.ArgumentWrapper;
 import homework.rate.HardcodedRateProvider;
 import homework.rate.RateProvider;
 
@@ -19,34 +20,8 @@ public class CommandLineApplication {
     private static final String DEFAULT_CURRENCY_CODE = "DKK";
     private static final RateProvider RATE_PROVIDER = new HardcodedRateProvider();
 
-    private Converter converter;
-
-    public CommandLineApplication(Converter converter) {
-        this.converter = converter;
-    }
-
     public static void main(String[] args) {
-
         // TODO Maybe to use converter factory ?
-        Converter converter = new Converter(MATH_OPERATIONS_CONTEXT, CURRENCY_SCALE, DEFAULT_LOCALE, DEFAULT_CURRENCY_CODE, RATE_PROVIDER);
-
-        new CommandLineApplication(converter).execute(args);
-    }
-
-    public void execute(String[] args) {
-        ExecutionResult result = converter.convert(args);
-        if (result.isSuccess()) {
-            printSuccessMessage(result.getSuccessMessage());
-        } else {
-            printErrorMessage(result.getErrorMessage());
-        }
-    }
-
-    public void printSuccessMessage(String message) {
-        System.out.println(message);
-    }
-
-    public void printErrorMessage(String message) {
-        System.err.println(message);
+        new ConversionHandler().convertAndPrintResult(new ArgumentWrapper(args));
     }
 }
