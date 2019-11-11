@@ -9,7 +9,10 @@ import homework.printer.Printer;
 import homework.rate.RateProvider;
 
 import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Stream;
 
+import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 public class ConversionHandler {
@@ -29,6 +32,7 @@ public class ConversionHandler {
         of(argument)
                 .filter(this::isValid)
                 .map(this::toConversionParameter)
+                .flatMap(o -> o)
                 .map(this::convert)
                 .ifPresentOrElse(this::printConvertedValue, () -> printFailureMessage(argument));
     }
@@ -37,16 +41,46 @@ public class ConversionHandler {
         return validator.isArgumentValid(argument);
     }
 
-    private ConversionParameter toConversionParameter(ArgumentWrapper argument) {
+    private Optional<ConversionParameter> toConversionParameter(ArgumentWrapper argument) {
+        Optional<Currency> sourceCurrency = argument.getSource().map(this::toCurrency);
+        Optional<Currency> targetCurrency = argument.getTarget().map(this::toCurrency);
+        Optional<BigDecimal> sourceRate = getSourceRate(argument);
+        Optional<BigDecimal> targetRate = getTargetRate(argument);
+        Optional<BigDecimal> amount = argument.getAmount();
 
-        // TODO fix this
+        if (allValuesPresent(sourceCurrency, targetCurrency, sourceRate, targetRate, amount)) {
+            return of(new ConversionParameter(
+                    sourceCurrency.get(),
+                    targetCurrency.get(),
+                    sourceRate.get(),
+                    targetRate.get(),
+                    amount.get()));
+        } else {
+            return empty();
+        }
+    }
 
-        Currency sourceCurrency = toCurrency(argument.getSource().get());
-        Currency targetCurrency = toCurrency(argument.getTarget().get());
-        BigDecimal sourceRate = rateProvider.getBuyRate(sourceCurrency).orElseThrow(() -> new RuntimeException("No buy rate"));
-        BigDecimal targetRate = rateProvider.getSellRate(targetCurrency).orElseThrow(() -> new RuntimeException("No sell rate"));
+    private Optional<BigDecimal> getSourceRate(ArgumentWrapper argument) {
+        return argument.getSource()
+                .map(this::toCurrency)
+                .map(rateProvider::getBuyRate)
+                .flatMap(o -> o);
+    }
 
-        return new ConversionParameter(sourceCurrency, targetCurrency, sourceRate, targetRate, argument.getAmount().get());
+    private Optional<BigDecimal> getTargetRate(ArgumentWrapper argument) {
+        return argument.getTarget()
+                .map(this::toCurrency)
+                .map(rateProvider::getSellRate)
+                .flatMap(o -> o);
+    }
+
+    private boolean allValuesPresent(Optional<Currency> sourceCurrency,
+                                     Optional<Currency> targetCurrency,
+                                     Optional<BigDecimal> sourceRate,
+                                     Optional<BigDecimal> targetRate,
+                                     Optional<BigDecimal> amount) {
+        return Stream.of(sourceCurrency, targetCurrency, sourceRate, targetRate, amount)
+                .allMatch(Optional::isPresent);
     }
 
     private Currency toCurrency(String code) {
