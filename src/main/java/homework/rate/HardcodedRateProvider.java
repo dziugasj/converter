@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.math.BigDecimal.valueOf;
 import static java.util.Optional.ofNullable;
 
 public class HardcodedRateProvider implements RateProvider {
@@ -30,15 +31,15 @@ public class HardcodedRateProvider implements RateProvider {
 
     private Map<Currency, BigDecimal> getHardcodedBuyMap() {
         return ImmutableMap.<Currency, BigDecimal>builder()
-                .put(new Currency("PLN"), BigDecimal.valueOf(4.41430))
-                .put(new Currency("USD"), BigDecimal.valueOf(1.14480))
+                .put(new Currency("PLN"), valueOf(4.41430))
+                .put(new Currency("USD"), valueOf(1.14480))
                 .build();
     }
 
     private Map<Currency, BigDecimal> getHardcodedSellMap() {
         return ImmutableMap.<Currency, BigDecimal>builder()
-                .put(new Currency("PLN"), BigDecimal.valueOf(4.10560))
-                .put(new Currency("USD"), BigDecimal.valueOf(1.06190))
+                .put(new Currency("PLN"), valueOf(4.10560))
+                .put(new Currency("USD"), valueOf(1.06190))
                 .build();
     }
 }

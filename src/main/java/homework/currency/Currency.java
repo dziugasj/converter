@@ -3,7 +3,6 @@ package homework.currency;
 import java.util.Objects;
 
 public class Currency {
-
     private final String code;
 
     public Currency(String code) {

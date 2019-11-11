@@ -7,7 +7,7 @@ import java.math.MathContext;
 
 import static java.math.BigDecimal.ONE;
 
-public class CurrencyConverter {
+public class CurrencyConverter implements Converter {
     private final MathContext mathContext;
     private final Currency baseCurrency;
     private final int scale;
@@ -20,6 +20,7 @@ public class CurrencyConverter {
         this.rateProvider = rateProvider;
     }
 
+    @Override
     public BigDecimal convert(Currency source, Currency target, BigDecimal amount) {
         if (conversionIsRequired(source, target)) {
             return round(convertAmount(source, target, amount));
@@ -39,7 +40,7 @@ public class CurrencyConverter {
     }
 
     private boolean conversionIsRequired(Currency source, Currency target) {
-        return !pair.getSourceCurrency().equals(pair.getTargetCurrency());
+        return !source.equals(target);
     }
 
     private BigDecimal toBaseCurrency(BigDecimal amount, Currency currency) {

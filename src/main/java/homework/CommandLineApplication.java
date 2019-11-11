@@ -4,24 +4,22 @@
 package homework;
 
 import homework.argument.ArgumentWrapper;
-import homework.rate.HardcodedRateProvider;
+import homework.argument.Validator;
+import homework.argument.ValidatorFactory;
+import homework.currency.Converter;
+import homework.currency.ConverterFactory;
+import homework.printer.Printer;
+import homework.printer.PrinterFactory;
 import homework.rate.RateProvider;
-
-import java.math.MathContext;
-import java.util.Locale;
-
-import static java.math.MathContext.DECIMAL64;
+import homework.rate.RateProviderFactory;
 
 public class CommandLineApplication {
-
-    private static final MathContext MATH_OPERATIONS_CONTEXT = DECIMAL64;
-    private static final int CURRENCY_SCALE = 2;
-    private static final Locale DEFAULT_LOCALE = Locale.forLanguageTag("da-DK");
-    private static final String DEFAULT_CURRENCY_CODE = "DKK";
-    private static final RateProvider RATE_PROVIDER = new HardcodedRateProvider();
-
     public static void main(String[] args) {
-        // TODO Maybe to use converter factory ?
-        new ConversionHandler().convertAndPrintResult(new ArgumentWrapper(args));
+        RateProvider rateProvider = new RateProviderFactory().getRateProvider();
+        Validator validator = new ValidatorFactory().getValidator(rateProvider);
+        Converter converter = new ConverterFactory().getConverter(rateProvider);
+        Printer printer = new PrinterFactory().getPrinter();
+
+        new ConversionHandler(validator, converter, printer).convertAndPrintResult(new ArgumentWrapper(args));
     }
 }
