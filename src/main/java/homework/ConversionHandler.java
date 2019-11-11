@@ -21,14 +21,14 @@ public class ConversionHandler {
     private final Printer printer;
     private final RateProvider rateProvider;
 
-    public ConversionHandler(Validator validator, Converter converter, Printer printer, RateProvider rateProvider) {
+    public ConversionHandler(final Validator validator, final Converter converter, final Printer printer, final RateProvider rateProvider) {
         this.validator = validator;
         this.converter = converter;
         this.printer = printer;
         this.rateProvider = rateProvider;
     }
 
-    public void convertAndPrintResult(ArgumentWrapper argument) {
+    public void convertAndPrintResult(final ArgumentWrapper argument) {
         of(argument)
                 .filter(this::isValid)
                 .map(this::toConversionParameter)

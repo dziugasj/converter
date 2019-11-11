@@ -8,7 +8,7 @@ import static java.util.Optional.*;
 public class ArgumentWrapper {
     private final String args[];
 
-    public ArgumentWrapper(String[] args) {
+    public ArgumentWrapper(final String[] args) {
         this.args = args;
     }
 

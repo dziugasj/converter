@@ -10,18 +10,18 @@ import java.util.function.Function;
 public class ArgumentValidator implements Validator {
     private final RateProvider rateProvider;
 
-    public ArgumentValidator(RateProvider rateProvider) {
+    public ArgumentValidator(final RateProvider rateProvider) {
         this.rateProvider = rateProvider;
     }
 
-    public boolean isArgumentValid(ArgumentWrapper argument) {
+    public boolean isArgumentValid(final ArgumentWrapper argument) {
         return sourceRateIsPresent(argument)
                 && targetRateIsPresent(argument)
                 && amountIsValid(argument.getAmount())
                 && argument.parameterCountIsValid();
     }
 
-    public String getFailureMessage(ArgumentWrapper argument) {
+    public String getFailureMessage(final ArgumentWrapper argument) {
         StringBuilder builder = new StringBuilder();
 
         if (argument.noParameters()) {

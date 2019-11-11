@@ -8,14 +8,14 @@ public class CurrencyConverter implements Converter {
     private final Currency baseCurrency;
     private final int scale;
 
-    public CurrencyConverter(MathContext mathContext, Currency baseCurrency, int scale) {
+    public CurrencyConverter(final MathContext mathContext, final Currency baseCurrency, final int scale) {
         this.mathContext = mathContext;
         this.baseCurrency = baseCurrency;
         this.scale = scale;
     }
 
     @Override
-    public BigDecimal convert(ConversionParameter parameter) {
+    public BigDecimal convert(final ConversionParameter parameter) {
         if (conversionIsRequired(parameter.getSourceCurrency(), parameter.getTargetCurrency())) {
             return round(convertAmount(parameter));
         } else {

@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Currency {
     private final String code;
 
-    public Currency(String code) {
+    public Currency(final String code) {
         this.code = code;
     }
 

@@ -3,7 +3,7 @@ package homework.printer;
 import java.math.BigDecimal;
 
 public interface Printer {
-    void printNumber(BigDecimal value);
+    void printNumber(final BigDecimal value);
 
-    void printMessage(String failureMessage);
+    void printMessage(final String failureMessage);
 }

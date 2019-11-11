@@ -9,7 +9,7 @@ public class ConversionParameter {
     private final BigDecimal targetRate;
     private final BigDecimal amount;
 
-    public ConversionParameter(Currency sourceCurrency, Currency targetCurrency, BigDecimal sourceRate, BigDecimal targetRate, BigDecimal amount) {
+    public ConversionParameter(final Currency sourceCurrency, final Currency targetCurrency, final BigDecimal sourceRate, final BigDecimal targetRate, final BigDecimal amount) {
         this.sourceCurrency = sourceCurrency;
         this.targetCurrency = targetCurrency;
         this.sourceRate = sourceRate;

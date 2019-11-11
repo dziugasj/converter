@@ -20,12 +20,12 @@ public class HardcodedRateProvider implements RateProvider {
     }
 
     @Override
-    public Optional<BigDecimal> getBuyRate(Currency currency) {
+    public Optional<BigDecimal> getBuyRate(final Currency currency) {
         return ofNullable(buyRateMap.get(currency));
     }
 
     @Override
-    public Optional<BigDecimal> getSellRate(Currency currency) {
+    public Optional<BigDecimal> getSellRate(final Currency currency) {
         return ofNullable(sellRateMap.get(currency));
     }
 
