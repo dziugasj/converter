@@ -1,25 +1,25 @@
 package homework.argument;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class ArgumentWrapper {
-
     private final String args[];
 
     public ArgumentWrapper(String[] args) {
         this.args = args;
     }
 
-    public String getSource() {
-        return null;
+    public Optional<String> getSource() {
+        return Optional.empty();
     }
 
-    public String getTarget() {
-        return null;
+    public Optional<String> getTarget() {
+        return Optional.empty();
     }
 
-    public BigDecimal getAmount() {
+    public Optional<BigDecimal> getAmount() {
 
-        return null;
+        return Optional.empty();
     }
 }

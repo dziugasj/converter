@@ -1,41 +1,41 @@
 package homework.currency;
 
-import homework.rate.RateProvider;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
-
-import static java.math.BigDecimal.ONE;
 
 public class CurrencyConverter implements Converter {
     private final MathContext mathContext;
     private final Currency baseCurrency;
     private final int scale;
-    private final RateProvider rateProvider;
 
-    public CurrencyConverter(MathContext mathContext, Currency baseCurrency, int scale, RateProvider rateProvider) {
+    public CurrencyConverter(MathContext mathContext, Currency baseCurrency, int scale) {
         this.mathContext = mathContext;
         this.baseCurrency = baseCurrency;
         this.scale = scale;
-        this.rateProvider = rateProvider;
     }
 
     @Override
-    public BigDecimal convert(Currency source, Currency target, BigDecimal amount) {
-        if (conversionIsRequired(source, target)) {
-            return round(convertAmount(source, target, amount));
+    public BigDecimal convert(ConversionParameter parameter) {
+        if (conversionIsRequired(parameter.getSourceCurrency(), parameter.getTargetCurrency())) {
+            return round(convertAmount(parameter));
         } else {
-            return amount;
+            return parameter.getAmount();
         }
     }
 
-    private BigDecimal convertAmount(Currency source, Currency target, BigDecimal amount) {
+    private BigDecimal convertAmount(ConversionParameter parameter) {
+        Currency source = parameter.getSourceCurrency();
+        Currency target = parameter.getTargetCurrency();
+        BigDecimal sourceRate = parameter.getSourceRate();
+        BigDecimal targetRate = parameter.getTargetRate();
+        BigDecimal amount = parameter.getAmount();
+
         if (source.equals(baseCurrency)) {
-            return toTargetCurrency(amount, target);
+            return toTargetCurrency(amount, targetRate);
         } else if (target.equals(baseCurrency)) {
-            return toBaseCurrency(amount, source);
+            return toBaseCurrency(amount, sourceRate);
         } else {
-            return toTargetCurrency(toBaseCurrency(amount, source), target);
+            return toTargetCurrency(toBaseCurrency(amount, sourceRate), targetRate);
         }
     }
 
@@ -43,25 +43,16 @@ public class CurrencyConverter implements Converter {
         return !source.equals(target);
     }
 
-    private BigDecimal toBaseCurrency(BigDecimal amount, Currency currency) {
-        return amount.divide(getBuyRate(currency), mathContext);
+    private BigDecimal toBaseCurrency(BigDecimal amount, BigDecimal rate) {
+        return amount.divide(rate, mathContext);
     }
 
-    private BigDecimal toTargetCurrency(BigDecimal amount, Currency currency) {
-        return amount.multiply(getSellRate(currency));
+    private BigDecimal toTargetCurrency(BigDecimal amount, BigDecimal rate) {
+        return amount.multiply(rate);
     }
 
     private BigDecimal round(BigDecimal amount) {
         return amount.setScale(scale, mathContext.getRoundingMode());
     }
 
-    private BigDecimal getBuyRate(Currency currency) {
-        // TODO
-        return rateProvider.getBuyRate(currency).orElse(ONE);
-    }
-
-    private BigDecimal getSellRate(Currency currency) {
-        // TODO Maybe those can be improved ?
-        return rateProvider.getSellRate(currency).orElse(ONE);
-    }
 }

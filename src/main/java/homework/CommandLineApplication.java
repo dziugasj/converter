@@ -20,6 +20,6 @@ public class CommandLineApplication {
         Converter converter = new ConverterFactory().getConverter(rateProvider);
         Printer printer = new PrinterFactory().getPrinter();
 
-        new ConversionHandler(validator, converter, printer).convertAndPrintResult(new ArgumentWrapper(args));
+        new ConversionHandler(validator, converter, printer, rateProvider).convertAndPrintResult(new ArgumentWrapper(args));
     }
 }
