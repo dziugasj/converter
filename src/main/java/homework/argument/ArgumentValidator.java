@@ -8,6 +8,12 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class ArgumentValidator implements Validator {
+    private static final String SOURCE_CODE_MISSING = "Source currency code incorrect;";
+    private static final String TARGET_CODE_MISSING = "Target currency code incorrect;";
+    private static final String AMOUNT_MISSING = "Amount is incorrectly formatted or missing;";
+    private static final String WRONG_PARAMETERS = "Wrong number of parameters;";
+    private static final String USAGE_MESSAGE = "Usage: Convert <Currency pair> <Amount to convert>";
+
     private final RateProvider rateProvider;
 
     public ArgumentValidator(final RateProvider rateProvider) {
@@ -38,30 +44,30 @@ public class ArgumentValidator implements Validator {
 
     private void addSourceMessage(ArgumentWrapper argument, StringBuilder builder) {
         if (!sourceRateIsPresent(argument)) {
-            builder.append("Source currency code incorrect;");
+            builder.append(SOURCE_CODE_MISSING);
         }
     }
 
     private void addTargetMessage(ArgumentWrapper argument, StringBuilder builder) {
         if (!targetRateIsPresent(argument)) {
-            builder.append("Target currency code incorrect;");
+            builder.append(TARGET_CODE_MISSING);
         }
     }
 
     private void addAmountMessage(ArgumentWrapper argument, StringBuilder builder) {
         if (!amountIsValid(argument.getAmount())) {
-            builder.append("Amount is incorrectly formatted or missing;");
+            builder.append(AMOUNT_MISSING);
         }
     }
 
     private void addParameterCountMessage(ArgumentWrapper argument, StringBuilder builder) {
         if (!argument.parameterCountIsValid()) {
-            builder.append("Wrong number of parameters;");
+            builder.append(WRONG_PARAMETERS);
         }
     }
 
     private void addUsageMessage(ArgumentWrapper argument, StringBuilder builder) {
-        builder.append("Usage: Convert <Currency pair> <Amount to convert>");
+        builder.append(USAGE_MESSAGE);
     }
 
     private boolean rateIsPresent(Optional<String> code, Function<Currency, Optional<BigDecimal>> getRate) {
