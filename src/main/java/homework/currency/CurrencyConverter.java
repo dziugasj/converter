@@ -44,11 +44,11 @@ public class CurrencyConverter implements Converter {
     }
 
     private BigDecimal toBaseCurrency(BigDecimal amount, BigDecimal rate) {
-        return amount.divide(rate, mathContext);
+        return amount.multiply(rate, mathContext);
     }
 
     private BigDecimal toTargetCurrency(BigDecimal amount, BigDecimal rate) {
-        return amount.multiply(rate);
+        return amount.divide(rate, mathContext);
     }
 
     private BigDecimal round(BigDecimal amount) {
