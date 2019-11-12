@@ -7,8 +7,7 @@
 * Rates are hardcoded (as you said)
 * Gradle wrapper used
 * Generic number format expected, like 200.00 (no regional settings)
-* During build warning is shown regarding Spock+Groovy libraries used buts is safe to ignore it
-
+* During build warning is shown regarding Spock+Groovy libraries used but it is safe to ignore it
 
 ##How to run
 You can pass command line parameters directly to gradle wrapper: 
