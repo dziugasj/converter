@@ -1,32 +1,24 @@
 package homework.rate
 
+import homework.currency.Currency
 import spock.lang.Specification
 import spock.lang.Subject
 
 class HardcodedRateProviderSpec extends Specification {
-
     @Subject
     HardcodedRateProvider hardcodedRateProvider = new HardcodedRateProvider()
 
-
-
-    def 'should return proper buy rate'() {
+    def 'should return empty buy rate when non existing currency passed'() {
         when:
-            RateProvider rateProvider = hardcodedRateProvider.getBuyRate()
+            def rate = hardcodedRateProvider.getBuyRate(new Currency("XXX"))
         then:
-            rateProvider in HardcodedRateProvider
+            rate.isEmpty()
     }
 
-
-    def 'should return proper sell rate'() {
+    def 'should return empty sell rate when non existing currency passed'() {
         when:
-            RateProvider rateProvider = rateProviderFactory.getRateProvider()
+            def rate = hardcodedRateProvider.getSellRate(new Currency("XXX"))
         then:
-            rateProvider in HardcodedRateProvider
+            rate.isEmpty()
     }
-
-
-
-
-
 }
