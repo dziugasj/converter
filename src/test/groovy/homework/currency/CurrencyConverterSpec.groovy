@@ -10,8 +10,8 @@ import static java.math.MathContext.DECIMAL64
 
 class CurrencyConverterSpec extends Specification {
     static final MathContext MATH_OPERATIONS_CONTEXT = DECIMAL64;
-    static final String BASE_CURRENCY_CODE = "EUR"
-    static final int SCALE = 2
+    static final String BASE_CURRENCY_CODE = "DKK"
+    static final int SCALE = 4
 
     @Subject
     CurrencyConverter currencyConverter = new CurrencyConverter(MATH_OPERATIONS_CONTEXT, new Currency(BASE_CURRENCY_CODE), SCALE);
@@ -28,6 +28,7 @@ class CurrencyConverterSpec extends Specification {
             'EUR'      | 'EUR'      | 1.2221     | 1.0545     | 200.00      | 200.00
     }
 
+
     @Unroll
     def 'should properly convert amount using given rates'() {
         given:
@@ -38,8 +39,8 @@ class CurrencyConverterSpec extends Specification {
             convertedAmount == expectedAmount
         where:
             sourceCode | targetCode | sourceRate | targetRate | givenAmount | expectedAmount
-            'EUR'      | 'PLN'      | 1.000      | 4.12120    | 200.00      | 824.24
-            'PLN'      | 'EUR'      | 4.43030    | 1.000      | 800.00      | 180.57
-            'PLN'      | 'USD'      | 4.43030    | 1.06010    | 500.00      | 119.64
+            'EUR'      | 'DKK'      | 7.4394     | 1.000      | 1.00        | 7.4394
+            'DKK'      | 'EUR'      | 1.000      | 7.4394     | 1.00        | 0.1344
+            'USD'      | 'EUR'      | 6.6311     | 7.4394     | 1.00        | 0.8913
     }
 }
