@@ -4,7 +4,6 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class ArgumentWrapperSpec extends Specification {
-
     @Unroll
     def 'should determine when parameters ar empty or not'() {
         given:

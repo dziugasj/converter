@@ -9,7 +9,6 @@ import static java.util.Optional.of
 import static java.util.Optional.empty
 
 class ArgumentValidatorSpec extends Specification {
-
     RateProvider rateProvider = createRateProviderMock()
 
     @Subject
