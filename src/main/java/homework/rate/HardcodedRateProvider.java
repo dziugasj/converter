@@ -31,17 +31,27 @@ public class HardcodedRateProvider implements RateProvider {
 
     private Map<Currency, BigDecimal> getHardcodedBuyMap() {
         return ImmutableMap.<Currency, BigDecimal>builder()
-                .put(new Currency("PLN"), valueOf(4.41430))
-                .put(new Currency("USD"), valueOf(1.14480))
-                .put(new Currency("EUR"), valueOf(1.0))
+                .put(new Currency("EUR"), valueOf(7.4394))
+                .put(new Currency("USD"), valueOf(6.6311))
+                .put(new Currency("GBP"), valueOf(8.5285))
+                .put(new Currency("SEK"), valueOf(0.7610))
+                .put(new Currency("NOK"), valueOf(0.7840))
+                .put(new Currency("CHF"), valueOf(6.8358))
+                .put(new Currency("JPY"), valueOf(0.059740))
+                .put(new Currency("DKK"), valueOf(1.0))
                 .build();
     }
 
     private Map<Currency, BigDecimal> getHardcodedSellMap() {
         return ImmutableMap.<Currency, BigDecimal>builder()
-                .put(new Currency("PLN"), valueOf(4.10560))
-                .put(new Currency("USD"), valueOf(1.06190))
-                .put(new Currency("EUR"), valueOf(1.0))
+                .put(new Currency("EUR"), valueOf(7.4394))
+                .put(new Currency("USD"), valueOf(6.6311))
+                .put(new Currency("GBP"), valueOf(8.5285))
+                .put(new Currency("SEK"), valueOf(0.7610))
+                .put(new Currency("NOK"), valueOf(0.7840))
+                .put(new Currency("CHF"), valueOf(6.8358))
+                .put(new Currency("JPY"), valueOf(0.059740))
+                .put(new Currency("DKK"), valueOf(1.0))
                 .build();
     }
 }
