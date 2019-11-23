@@ -21,10 +21,10 @@ public class ArgumentValidator implements Validator {
     }
 
     public boolean isArgumentValid(final ArgumentWrapper argument) {
-        return sourceRateIsPresent(argument)
+        return argument.parameterCountIsValid()
+                && sourceRateIsPresent(argument)
                 && targetRateIsPresent(argument)
-                && amountIsValid(argument.getAmount())
-                && argument.parameterCountIsValid();
+                && amountIsValid(argument.getAmount());
     }
 
     public String getFailureMessage(final ArgumentWrapper argument) {
